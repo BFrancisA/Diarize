@@ -34,7 +34,7 @@ frame-number.speaker-pin-number
 Train-cnn.py		Used to train the 2-D CNN model.
 Train-R-CNN.py	Used to train the R-CNN model.
 
-##Diarization Function
+## Diarization Function
 
 Diarize-Model-Clustering.py  :  Used to diarize recordings 
 represented as superframes.  Produces a diarization accuracy 
