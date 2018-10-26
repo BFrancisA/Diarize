@@ -1,0 +1,105 @@
+CNN + one of the below plus Flatten-Dense(speaker_target_names_count, activation='softmax'
+RMSProp lr=0.001
+
+Bidir, mul
+Epoch 00040: val_loss did not improve from 0.22954
+Test accuracy: 94.7368%
+94.73684210526316
+
+Bidir, concat
+Epoch 00040: val_loss did not improve from 0.15090
+Test accuracy: 92.3246%
+92.32456140350877
+
+Bidir, sum
+Epoch 00040: val_loss did not improve from 0.11321
+Test accuracy: 95.1754%
+95.17543859649123
+
+Plain GRU (not bidirectional)
+Epoch 00040: val_loss did not improve from 0.14910
+Test accuracy: 94.2982%
+94.29824561403508
+
+Repeat Bidir sum with 80 epochs
+Epoch 00080: val_loss improved from 0.07433 to 0.07207, saving model to saved_models/r-cnn-1.weights.best.data-200.hdf5
+Test accuracy: 98.4649%
+98.46491228070175
+
+=====================================================================
+CNN + one of the below plus Flatten-Dense(speaker_target_names_count, activation='softmax'
+RMSProp lr=0.001
+
+spec = Bidirectional(GRU(32, activation='tanh', dropout=dropout_rate,
+                         recurrent_dropout=dropout_rate, return_sequences=True),
+                     merge_mode='sum')(spec)
+
+spec = Bidirectional(GRU(32, activation='tanh', dropout=dropout_rate,
+                         recurrent_dropout=dropout_rate, return_sequences=True),
+                     merge_mode='sum')(spec)
+					 
+Epoch 00080: val_loss improved from 0.07576 to 0.04377, saving model to saved_models/r-cnn-1.weights.best.data-200.hdf5
+Test accuracy: 97.8070%
+97.80701754385964					 
+					 
+====================================================================
+CNN + one of the below plus Flatten-Dense(speaker_target_names_count, activation='softmax'
+RMSProp lr=0.001
+
+spec = Bidirectional(GRU(32, activation='tanh', dropout=dropout_rate,
+                         recurrent_dropout=dropout_rate, return_sequences=True),
+                     merge_mode='sum')(spec)
+
+spec = Bidirectional(GRU(32, activation='tanh', dropout=dropout_rate,
+                         recurrent_dropout=dropout_rate, return_sequences=True),
+                     merge_mode='sum')(spec)=====
+
+spec = TimeDistributed(Dense(32))(spec)
+spec = Dropout(dropout_rate)(spec)
+
+Epoch 00080: val_loss did not improve from 0.09695
+Test accuracy: 95.3947%
+95.39473684210526
+
+Epoch 00140: val_loss did not improve from 0.00662
+Test accuracy: 97.8070%
+97.80701754385964
+
+====================================================================
+CNN + one of the below plus Flatten-Dense(speaker_target_names_count, activation='softmax'
+RMSProp lr=0.001
+
+spec = Bidirectional(GRU(32, activation='tanh', dropout=dropout_rate,
+                         recurrent_dropout=dropout_rate, return_sequences=True),
+                     merge_mode='sum')(spec)
+
+spec = Bidirectional(GRU(32, activation='tanh', dropout=dropout_rate,
+                         recurrent_dropout=dropout_rate, return_sequences=True),
+                     merge_mode='sum')(spec)
+
+# Are these needed?
+spec = TimeDistributed(Dense(32))(spec)
+spec = Dropout(dropout_rate)(spec)
+
+spec = TimeDistributed(Dense(32))(spec)
+spec = Dropout(dropout_rate)(spec)
+
+Epoch 00180: val_loss did not improve from 0.00629
+Test accuracy: 98.4649%
+98.46491228070175
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
