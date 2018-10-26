@@ -103,7 +103,7 @@ model.summary()
 """
 Compile model
 """
-# default is lr=0.001, try lr=0.0001
+# default is lr=0.001, use lr=0.0001 for large training set
 rmsprop_slow = optimizers.RMSprop(lr=0.001, rho=0.9, epsilon=None, decay=0.0)
 model.compile(optimizer=rmsprop_slow, loss='categorical_crossentropy', metrics=['accuracy'])
 

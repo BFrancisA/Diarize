@@ -93,8 +93,8 @@ model.summary()
 """
 Compile model
 """
-# default is lr=0.001, try lr=0.0001
-rmsprop_slow = optimizers.RMSprop(lr=0.0001, rho=0.9, epsilon=None, decay=0.0)
+# default is lr=0.001, use lr=0.0001 for large training set
+rmsprop_slow = optimizers.RMSprop(lr=0.001, rho=0.9, epsilon=None, decay=0.0)
 model.compile(optimizer=rmsprop_slow, loss='categorical_crossentropy', metrics=['accuracy'])
 
 #model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
@@ -103,7 +103,7 @@ model.compile(optimizer=rmsprop_slow, loss='categorical_crossentropy', metrics=[
 """
 Train model
 """
-epochs = 50  # 1000
+epochs = 100  # 1000
 
 checkpointer = ModelCheckpoint(filepath='saved_models/CnnModel/cnn-weights.TEST.data-200.hdf5',
                                verbose=1, save_best_only=True)
