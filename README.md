@@ -31,13 +31,15 @@ Each superframe file is named using the format
 frame-number.speaker-pin-number
 
 ## Training Functions
-Train-cnn.py		Used to train the 2-D CNN model.
-Train-R-CNN.py	Used to train the R-CNN model.
+- Train-cnn.py :		Used to train the 2-D CNN model.
+- Train-R-CNN.py :	Used to train the R-CNN model.
 
 ## Diarization Function
 
 Diarize-Model-Clustering.py  :  Used to diarize recordings 
-represented as superframes.  Produces a diarization accuracy 
+represented as superframes.  
+
+Produces a diarization accuracy 
 score measuring the percentage of superframes correctly 
 diarized as either speaker 1 or speaker 2 in these two-speaker 
 recordings.
