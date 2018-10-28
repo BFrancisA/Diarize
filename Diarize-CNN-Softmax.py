@@ -1,5 +1,8 @@
 """
 Run Diarization using the CNN only for Speaker Classification
+This method tries to detect speaker changes using cosine distance between successive
+superframes.  It does not work well.  Instead the Gaussian Weighted Clustering is much
+more effective and is the preferred approach.  See:  Diarize-Model-Clustering.py
 """
 
 import os
@@ -62,7 +65,7 @@ newSpeakerThreshold = 0.6
 sameSpeakerThreshold = 0.6
 
 # Parent directory containing all the recording.  There is one recording per subdirectory.
-all_files_path = 'RNNTrainingData-Trim-Small'
+all_files_path = 'RNNTestData-Trim-Small'
 #all_files_path = 'C:\Diarization\RNNTrainingData-Trim'
 #all_files_path = 'C:\Diarization\RecordingDataTest'
 
@@ -73,8 +76,10 @@ print(recordingsDirs)
 
 trueSpeakerCount = 2
 number_of_targets = 260   # total number of speakers
+dropout_rate = 0  # not used here
+tensor_shape = (1, 64, 32, 1)
 
-model = CnnModel_2.create_model(number_of_targets)
+model = CnnModel_2.create_model(number_of_targets, tensor_shape, dropout_rate)
 path_to_weights = 'saved_models/CnnModel/weights.best.data-200.hdf5'
 model.load_weights(path_to_weights)
 

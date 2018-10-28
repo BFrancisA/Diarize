@@ -5,6 +5,7 @@
       <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/saved_models" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/Data-small" />
+      <excludeFolder url="file://$MODULE_DIR$/RNNTestData-Trim-Small" />
       <excludeFolder url="file://$MODULE_DIR$/RNNTrainingData-Trim-Small" />
       <excludeFolder url="file://$MODULE_DIR$/saved_models" />
     </content>
