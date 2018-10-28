@@ -1,6 +1,8 @@
 # Diarize
 Diarization Project
 
+- Proposal:  Proposal.pdf
+- Project Report: ML-Project-Report.pdf
  
 All development was carried out using:
 - PyCharm 2018.2 (Community Edition)
