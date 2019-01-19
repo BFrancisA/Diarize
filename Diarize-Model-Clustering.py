@@ -1,12 +1,13 @@
 """
-Run Diarization using the CNN only for Speaker Classification Followed by
+Run Diarization using the CNN or CNN-RNN only for Speaker Classification Followed by
 Gaussian Mixture Clustering for Speaker Labelling.
 """
 
 import os
 import sys
 import numpy as np
-
+from keras import backend as K
+from keras.models import Model
 import GetSuperframesInfo
 import LoadDataset
 import Clustering
@@ -55,10 +56,12 @@ To evaluate the accuracy:
 
 
 # Parent directory containing all the recording.  There is one recording per subdirectory.
-all_files_path = 'RNNTestData-Trim-Small'
+#all_files_path = 'RNNTestData-Trim-Small'
 # all_files_path = 'C:\Diarization\RNNTestData-Trim'
 # all_files_path = 'C:\Diarization\RecordingDataTest-Uneven'
 # all_files_path = 'C:\Diarization\SWBPhase3DataTest'
+all_files_path = 'C:/Diarization/0.5-sec-superframes/SWB2Phase3TestData-0.5secCeps'
+#all_files_path = 'C:/Diarization/0.5-sec-superframes/SWB2Phase3TestData-0.5secCeps-small'
 
 # Get a list of the recording directories.
 recordings = [name for name in os.listdir(all_files_path)]
@@ -68,24 +71,36 @@ print(recordingsDirs)
 trueSpeakerCount = 2
 maxSpeakersClasses = 4  # Max number of speaker classes allowed when clustering
 
-tensor_shape = (1, 64, 32, 1)
+n_frames = 16  # frames per superframe
+tensor_shape = (1, n_frames, 32, 1)
 dropout_rate = 0  # not used here
 number_of_targets = 260  # total number of speakers
 
-
+"""
 # Best CNN only model
-model = CnnModel_2.create_model(number_of_targets, tensor_shape, dropout_rate)
-path_to_weights = 'saved_models/CnnModel/weights.best.data-200.hdf5'
-
+model = CnnModel_2.create_model(number_of_targets, tensor_shape, dropout_rate, n_frames)
+path_to_weights = 'D:/MLND/GitRepo/diarize/Diarize/saved_models_halfSec/CnnModel/cnn-weights.Best.data-1000.hdf5'
+model.load_weights(path_to_weights)
+model.summary()
+"""
 
 """
 # Best R-CNN Model
 model = R_CnnModel_4.create_model(number_of_targets, tensor_shape, dropout_rate)
-path_to_weights = 'saved_models/r-cnn-test4.weights.best.data-200.hdf5'
-"""
-
+path_to_weights = 'saved_models/r-cnn-test4-TEST-history.weights.best.data-1000.hdf5'
 model.load_weights(path_to_weights)
 model.summary()
+"""
+
+
+# Best CNN only model -- Use output of Flatten layer instead of 230 speaker scores.
+fullmodel = CnnModel_2.create_model(number_of_targets, tensor_shape, dropout_rate, n_frames)
+path_to_weights = 'D:/MLND/GitRepo/diarize/Diarize/saved_models_halfSec/CnnModel/cnn-weights.Best.data-1000.hdf5'
+fullmodel.load_weights(path_to_weights)
+layer_name = 'flatten_layer'
+model = Model(inputs=fullmodel.input, outputs=fullmodel.get_layer(layer_name).output)
+model.summary()
+
 
 # Accumulators for count of non-double superframes classified as speaker 1 or 2...
 # Accumulate of number of diarization superframe labels that are wrong.

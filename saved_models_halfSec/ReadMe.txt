@@ -1,0 +1,1 @@
+These models were trained using the 0.512 second superframes.

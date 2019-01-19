@@ -18,7 +18,7 @@ def create_model(speaker_target_names_count, input_tensors_shape, dropout_rate):
 
     # inpput is (samples, time, freq, numFilters)
 
-    data_in_shape = input_tensors_shape  # (1, 64, 32, 1)
+    data_in_shape = input_tensors_shape  # (1, 64 or 16, 32, 1)
 
     # RNN-CNN specification
     #                            3rd from last   2nd from last         last

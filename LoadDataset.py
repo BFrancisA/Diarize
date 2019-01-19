@@ -29,9 +29,16 @@ def path_to_tensor(sample_path):
 
     scaled_data = [(val + Scaling.shift) * Scaling.scale for val in data]
 
-    array = np.reshape(scaled_data, [64, 32])
+    # cepstrum vector is 32 in length
+    cepsLength = 32
+    cepsCount = int(len(scaled_data) / cepsLength)
 
-    # Convert 2D tensor to 4D tensor with shape (1, 64, 32, 1) and return 4D tensor
+    # For 0.512 second supeframe expect 32 X 16
+    # For 2.048 second superframe expect 64 X 32
+
+    array = np.reshape(scaled_data, [cepsCount, cepsLength])
+
+    # Convert 2D tensor to 4D tensor with shape (1, cepsCount, 32, 1) and return 4D tensor
     a2 = np.expand_dims(array, axis=0)
     a3 = np.expand_dims(a2, axis=3)
     return a3
