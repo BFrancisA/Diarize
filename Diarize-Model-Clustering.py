@@ -60,8 +60,9 @@ To evaluate the accuracy:
 # all_files_path = 'C:\Diarization\RNNTestData-Trim'
 # all_files_path = 'C:\Diarization\RecordingDataTest-Uneven'
 # all_files_path = 'C:\Diarization\SWBPhase3DataTest'
-all_files_path = 'C:/Diarization/0.5-sec-superframes/SWB2Phase3TestData-0.5secCeps'
+#all_files_path = 'C:/Diarization/0.5-sec-superframes/SWB2Phase3TestData-0.5secCeps'
 #all_files_path = 'C:/Diarization/0.5-sec-superframes/SWB2Phase3TestData-0.5secCeps-small'
+all_files_path = 'TestData-0.5sec/SWB2Phase3TestData-0.5secCeps-small'
 
 # Get a list of the recording directories.
 recordings = [name for name in os.listdir(all_files_path)]

@@ -4,10 +4,14 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/saved_models" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/Data-Small-0.5sec" />
       <excludeFolder url="file://$MODULE_DIR$/Data-small" />
+      <excludeFolder url="file://$MODULE_DIR$/Experiments" />
       <excludeFolder url="file://$MODULE_DIR$/RNNTestData-Trim-Small" />
       <excludeFolder url="file://$MODULE_DIR$/RNNTrainingData-Trim-Small" />
+      <excludeFolder url="file://$MODULE_DIR$/TestData-0.5sec" />
       <excludeFolder url="file://$MODULE_DIR$/saved_models" />
+      <excludeFolder url="file://$MODULE_DIR$/saved_models_halfSec" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
