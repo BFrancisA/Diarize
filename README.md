@@ -11,6 +11,9 @@ All development was carried out using:
 - JVM: OpenJDK 64-Bit Server VM by JetBrains s.r.o
 - Windows 10 10.0 
 
+Note tensorflow 1.6 and up *without* GPU uses AVX which is not available on older CPUs.
+So use tensorflow 1.5.1.  (see hardware info at https://www.tensorflow.org/install/pip)
+
 The easiest way to run the python functions in this project it to load 
 the project into PyCharm.  All the dependencies will be loaded by PyCharm
 using Conda.

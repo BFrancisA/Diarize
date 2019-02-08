@@ -4,7 +4,7 @@ Gaussian Mixture Clustering for Speaker Labelling.
 """
 
 import os
-import sys
+#import sys
 import numpy as np
 from keras import backend as K
 from keras.models import Model
@@ -93,13 +93,20 @@ model.load_weights(path_to_weights)
 model.summary()
 """
 
-
-# Best CNN only model -- Use output of Flatten layer instead of 230 speaker scores.
+"""
+# Best CNN only model -- Use output of Flatten layer instead of 260 speaker scores.
 fullmodel = CnnModel_2.create_model(number_of_targets, tensor_shape, dropout_rate, n_frames)
-path_to_weights = 'D:/MLND/GitRepo/diarize/Diarize/saved_models_halfSec/CnnModel/cnn-weights.Best.data-1000.hdf5'
+path_to_weights = 'saved_models_halfSec/CnnModel/cnn-weights.Best.data-1000.hdf5'
 fullmodel.load_weights(path_to_weights)
 layer_name = 'flatten_layer'
 model = Model(inputs=fullmodel.input, outputs=fullmodel.get_layer(layer_name).output)
+model.summary()
+"""
+
+# Best CNN only model -- Output 260 speaker scores.
+model = CnnModel_2.create_model(number_of_targets, tensor_shape, dropout_rate, n_frames)
+path_to_weights = 'saved_models_halfSec/CnnModel/cnn-weights.Best.data-1000.hdf5'
+model.load_weights(path_to_weights)
 model.summary()
 
 
