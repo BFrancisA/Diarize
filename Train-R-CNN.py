@@ -35,9 +35,13 @@ Load the training data for the speaker classifier
 # test_files_path  = 'C:/Diarization/0.5-sec-superframes/Data-Small/test'
 # number_of_targets = 5  # total number of speakers
 
-train_files_path = 'C:/Diarization/0.5-sec-superframes/Data-1000/train'
-valid_files_path = 'C:/Diarization/0.5-sec-superframes/Data-1000/valid'
-test_files_path  = 'C:/Diarization/0.5-sec-superframes/Data-1000/test'
+# train_files_path = 'C:/Diarization/0.5-sec-superframes/Data-1000/train'
+# valid_files_path = 'C:/Diarization/0.5-sec-superframes/Data-1000/valid'
+# test_files_path  = 'C:/Diarization/0.5-sec-superframes/Data-1000/test'
+
+train_files_path = 'C:/Diarization/1-sec-superframes/Data-250/train'
+valid_files_path = 'C:/Diarization/1-sec-superframes/Data-250/valid'
+test_files_path  = 'C:/Diarization/1-sec-superframes/Data-250/test'
 number_of_targets = 260   # total number of speakers
 
 
@@ -121,7 +125,7 @@ Train model
 """
 epochs = 1250  # 1250
 
-checkpointer = ModelCheckpoint(filepath='saved_models_halfSec/R-CNN/r-cnn-test4-TEST-history.weights.best.data-1000.hdf5',
+checkpointer = ModelCheckpoint(filepath='saved_models_1sec/R-CNN/r-cnn-test1-TEST-history.weights.best.data-250.hdf5',
                                verbose=1, save_best_only=True)
 
 earlystopping = EarlyStopping(monitor='val_loss', min_delta=0, patience=50, verbose=0, mode='auto')
@@ -136,7 +140,7 @@ history = model.fit(train_tensors, train_targets,
 Load the checkpoint model that had the best validation loss.
 Measure the accuracy of the classification using the test data set. 
 """
-model.load_weights('saved_models/r-cnn-test4-TEST-history.weights.best.data-1000.hdf5')
+model.load_weights('saved_models_1sec/R-CNN/r-cnn-test1-TEST-history.weights.best.data-250.hdf5')
 
 speaker_classifications = [np.argmax(model.predict(np.expand_dims(tensor, axis=0))) for tensor in test_tensors]
 
@@ -157,7 +161,7 @@ plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('saved_models_halfSec/R-CNN/r-cnn-test4-TEST-history.accuracy.svg')
+plt.savefig('saved_models_1sec/R-CNN/r-cnn-test1-TEST-history.accuracy.svg')
 plt.clf()
 
 # summarize history for loss
@@ -167,7 +171,7 @@ plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('saved_models_halfSec/R-CNN/r-cnn-test4-TEST-history.loss.svg')
+plt.savefig('saved_models_1sec/R-CNN/r-cnn-test1-TEST-history.loss.svg')
 plt.show()
 
 

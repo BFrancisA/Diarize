@@ -26,9 +26,14 @@ Load the training data for the speaker classifier
 # test_files_path  = 'C:/Diarization/0.5-sec-superframes/Data-Small/test'
 # number_of_targets = 5  # total number of speakers
 
-train_files_path = 'C:/Diarization/0.5-sec-superframes/Data-1000/train'
-valid_files_path = 'C:/Diarization/0.5-sec-superframes/Data-1000/valid'
-test_files_path  = 'C:/Diarization/0.5-sec-superframes/Data-1000/test'
+# train_files_path = 'C:/Diarization/0.5-sec-superframes/Data-1000/train'
+# valid_files_path = 'C:/Diarization/0.5-sec-superframes/Data-1000/valid'
+# test_files_path  = 'C:/Diarization/0.5-sec-superframes/Data-1000/test'
+
+train_files_path = 'C:/Diarization/1-sec-superframes/Data-250/train'
+valid_files_path = 'C:/Diarization/1-sec-superframes/Data-250/valid'
+test_files_path  = 'C:/Diarization/1-sec-superframes/Data-250/test'
+
 number_of_targets = 260   # total number of speakers
 
 
@@ -91,7 +96,7 @@ Create model
 dropout_rate = 0.2
 data_in_shape = train_tensors.shape  # 2.048s (1, 64, 32, 1)  or  0.512s (1, 16, 32, 1)
 
-n_frames = 16  # frames per superframe
+n_frames = 32  # frames per superframe   16 for 0.5sec superframe, 32 for 1.0sec superframe
 
 #model = CnnModel.create_model(number_of_targets, train_tensors.shape, dropout_rate)
 model = CnnModel_2.create_model(number_of_targets, train_tensors.shape, dropout_rate, n_frames)
@@ -111,9 +116,9 @@ model.compile(optimizer=rmsprop_slow, loss='categorical_crossentropy', metrics=[
 """
 Train model
 """
-epochs = 10000  # 1000
+epochs = 1000  # 1000
 
-checkpointer = ModelCheckpoint(filepath='saved_models_halfSec/CnnModel/cnn-weights.TEST.data-1000.hdf5',
+checkpointer = ModelCheckpoint(filepath='saved_models_1sec/CnnModel/cnn-weights.TEST.data-250.hdf5',
                                verbose=1, save_best_only=True)
 
 
@@ -140,7 +145,7 @@ Save the model and the last generated weights separately.
 Load the checkpoint model that had the best validation loss.
 Measure the accuracy of the classified using the test data set. 
 """
-model.load_weights('saved_models_halfSec/CnnModel/cnn-weights.TEST.data-1000.hdf5')
+model.load_weights('saved_models_1sec/CnnModel/cnn-weights.TEST.data-250.hdf5')
 
 speaker_classifications = [np.argmax(model.predict(np.expand_dims(tensor, axis=0))) for tensor in test_tensors]
 
@@ -161,7 +166,7 @@ plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('saved_models_halfSec/CnnModel/cnn-weights.TEST.data-1000.history.accuracy.svg')
+plt.savefig('saved_models_1sec/CnnModel/cnn-weights.TEST.data-250.history.accuracy.svg')
 plt.clf()
 
 # summarize history for loss
@@ -171,5 +176,5 @@ plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('saved_models_halfSec/CnnModel/cnn-weights.TEST.data-1000.history.loss.svg')
+plt.savefig('saved_models_1sec/CnnModel/cnn-weights.TEST.data-250.history.loss.svg')
 plt.show()
