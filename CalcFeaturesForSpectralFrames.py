@@ -36,7 +36,9 @@ def read_frames_into_superframes_with_scaling(input_cepstrums_file_path, frame_l
     # \----------- /
     #      \----------- /
     #            \----------- /
-    # Superframes overlap  by 25% for 2.048 super frame.  By 50 % for 0.512s superframe.
+    # Superframes overlap  by 25% for 2.048s super frame.
+    #                      By 50% for 0.512s superframe.
+    #                      By 50% for 1.024s superframe
 
     # Build superframes by taking K = # of frames per superframe, and advancing the row position by frame_overlap
     frames = np.reshape(scaled_data, [frameCount, frame_len])
@@ -67,10 +69,18 @@ Given an input binary file (or array) containing an array of cepstrum frames:
 - Given the superframe labelling by speaker, generate a labelling per input frame.
 - Return the frame labelling as an array.
 """
+# Set a fixed random generator seed to get repeatable results.
+r = 1
+from numpy.random import seed
+seed(r)
+from tensorflow import set_random_seed
+set_random_seed(r)
+
+# Setup input.
 cepstrumFramesFilePath = 'E:/RepoExperiments/JsiDiarize/Output/SpeechFeatures.bin'
 frame_len = 32
-super_frame_len = 16
-frame_overlap = 8
+super_frame_len = 16  # 16 for 0.5s, 32 for 1.0s superframe
+frame_overlap = (int)(0.5 * super_frame_len)
 maxSpeakersClasses = 3
 
 output_superframe_labels_file_path = 'E:/RepoExperiments/JsiDiarize/Output/superframe_labels.bin'
@@ -110,14 +120,23 @@ layer_name = 'flatten_layer'
 model = Model(inputs=fullmodel.input, outputs=fullmodel.get_layer(layer_name).output)
 model.summary()
 """
+
 # Best CNN only model -- Output 260 speaker scores.
 model = CnnModel_2.create_model(number_of_targets, tensor_shape, dropout_rate, super_frame_len)
 path_to_weights = 'saved_models_halfSec/CnnModel/cnn-weights.Best.data-1000.hdf5'
 model.load_weights(path_to_weights)
 model.summary()
 
+"""
+# Best CNN only model -- Output 260 speaker scores.
+model = CnnModel_2.create_model(number_of_targets, tensor_shape, dropout_rate, super_frame_len)
+path_to_weights = 'saved_models_1sec/CnnModel/cnn-weights.TEST.data-250.hdf5'
+model.load_weights(path_to_weights)
+model.summary()
+"""
+
 #
-# Rub the CNN to get the features vectors (one per superframe tensor) -----------------------------------------------
+# Run the CNN to get the features vectors (one per superframe tensor) -----------------------------------------------
 #
 # For each superframe:
 #    read the superframe
@@ -170,7 +189,7 @@ else:
 # \---------/
 #      \---------/
 #            \---------/
-# Superframes overlap  50 % for 0.512s superframe.
+# Superframes overlap  50 % for 1.024s and 0.512s superframe options.
 #
 superframe_count = len(speakerLabels)
 total_frame_count = superframe_count * frame_overlap + frame_overlap
